@@ -30,8 +30,8 @@ def check_win(field):
         return False
 
 def main(field):
-    win = False
     counter = 0
+    win = False
     while not win:
         draw_field(field)
         if counter % 2 == 0 :
@@ -40,11 +40,11 @@ def main(field):
             take_input("O")
 
         counter += 1
-        if counter > 4 :
+        if counter > 4:
             temp = check_win(field)
             if temp:
-                win = True
                 print(temp, "Выиграл!")
+                win = True
                 break
         if counter == 9:
             print("Ничья!")
@@ -53,5 +53,3 @@ def main(field):
     draw_field(field)
 
 main(field)
-
-
