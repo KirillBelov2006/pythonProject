@@ -11,5 +11,3 @@ class Rectangle:
     def get_area(self):
         return  self.height * self.width
 
-rectangle = Rectangle(width=15,height=10)
-print(rectangle.get_area())
