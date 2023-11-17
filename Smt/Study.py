@@ -959,76 +959,363 @@ import array
 # print(a)
 
 
-G = {
-    "Адмиралтейская": {
-        "Садовая": 4},
-    "Садовая": {
-        "Сенная площадь": 4,
-        "Спасская": 3,
-        "Адмиралтейская": 4,
-        "Звенигородская": 5},
-    "Сенная площадь": {
-        "Садовая": 4,
-        "Спасская": 4},
-    "Спасская": {
-        "Садовая": 3,
-        "Сенная площадь": 4,
-        "Достоевская": 6},
-    "Звенигородская": {
-        "Пушкинская": 3,
-        "Садовая": 5},
-    "Пушкинская": {
-        "Звенигородская": 3,
-        "Владимирская": 4},
-    "Владимирская": {
-        "Достоевская": 3,
-        "Пушкинская": 4},
-    "Достоевская": {
-        "Владимирская": 3,
-        "Спасская": 6}
-}
+# G = {
+#     "Адмиралтейская": {
+#         "Садовая": 4},
+#     "Садовая": {
+#         "Сенная площадь": 4,
+#         "Спасская": 3,
+#         "Адмиралтейская": 4,
+#         "Звенигородская": 5},
+#     "Сенная площадь": {
+#         "Садовая": 4,
+#         "Спасская": 4},
+#     "Спасская": {
+#         "Садовая": 3,
+#         "Сенная площадь": 4,
+#         "Достоевская": 6},
+#     "Звенигородская": {
+#         "Пушкинская": 3,
+#         "Садовая": 5},
+#     "Пушкинская": {
+#         "Звенигородская": 3,
+#         "Владимирская": 4},
+#     "Владимирская": {
+#         "Достоевская": 3,
+#         "Пушкинская": 4},
+#     "Достоевская": {
+#         "Владимирская": 3,
+#         "Спасская": 6}
+# }
+#
+#
+#
+# D = {k : 100 for k in G.keys()}
+# D["Адмиралтейская"] = 0
+# U = {k : False for k in G.keys()}
+#
+# D = {k : 100 for k in G.keys()}  # расстояния
+# start_k = 'Адмиралтейская'  # стартовая вершина
+# D[start_k] = 0  # расстояние от неё до самой себя равно нулю
+# U = {k : False for k in G.keys()}  # флаги просмотра вершин
+#
+# for _ in range(len(D)):
+#     # выбираем среди непросмотренных наименьшее по расстоянию
+#     min_k = min([k for k in U.keys() if not U[k]], key = lambda x: D[x])
+#
+#     for v in G[min_k].keys():  # проходимся по всем смежным вершинам
+#         D[v] = min(D[v], D[min_k] + G[min_k][v])  # минимум
+#     U[min_k] = True  # просмотренную вершину помечаем
+#
+# D = {k : 100 for k in G.keys()}  # расстояния
+# start_k = 'Адмиралтейская'  # стартовая вершина
+# D[start_k] = 0  # расстояние от неё до самой себя равно нулю
+# U = {k : False for k in G.keys()}  # флаги просмотра вершин
+# P = {k : None for k in G.keys()}  # предки
+#
+# for _ in range(len(D)):
+#     # выбираем среди непросмотренных наименьшее по расстоянию
+#     min_k = min([k for k in U.keys() if not U[k]], key = lambda x: D[x])
+#
+#     for v in G[min_k].keys():  # проходимся по всем смежным вершинам
+#          if D[v] > D[min_k] + G[min_k][v]:  # если расстояние от текущей вершины меньше
+#             D[v] = D[min_k] + G[min_k][v]  # то фиксируем его
+#             P[v] = min_k  # и записываем как предок
+#     U[min_k] = True  # просмотренную вершину помечаем
+#
+# pointer = "Владимирская" # куда должны прийти
+# path = [] # список с вершинами пути
+# while pointer is not None: # перемещаемся, пока не придём в стартовую точку
+#    path.append(pointer)
+#    pointer = P[pointer]
+#
+# path.reverse() # разворачиваем путь
+# for v in path:
+#     print(v)
+
+# class BinaryTree:
+#     def __init__(self, value):
+#         self.value = value
+#         self.left_child = None
+#         self.right_child = None
+#
+#     def insert_left(self, next_value):
+#         if self.left_child is None:
+#             self.left_child = BinaryTree(next_value)
+#         else:
+#             new_child = BinaryTree(next_value)
+#             new_child.left_child = self.left_child
+#             self.left_child = new_child
+#         return self
+#
+#     def insert_right(self, next_value):
+#         if self.right_child is None:
+#             self.right_child = BinaryTree(next_value)
+#         else:
+#             new_child = BinaryTree(next_value)
+#             new_child.right_child = self.right_child
+#             self.right_child = new_child
+#         return self
+#
+#
+#     def post_order(self):
+#         if self.left_child is not None:  # если левый потомок существует
+#             self.left_child.post_order()  # рекурсивно вызываем функцию
+#
+#         if self.right_child is not None:  # если правый потомок существует
+#             self.right_child.post_order()  # рекурсивно вызываем функцию
+#
+#         print(self.value)
+#
+#
+#
+# node_root = BinaryTree(2).insert_left(7).insert_right(5)
+# node_7 = node_root.left_child.insert_left(2).insert_right(6)
+# node_6 = node_7.right_child.insert_left(5).insert_right(11)
+# node_5 = node_root.right_child.insert_right(9)
+# node_9 = node_5.right_child.insert_left(4)
+#
+# node_root.post_order()
 
 
+# class Node:  # класс элемента
+#     def __init__(self, value=None, next_=None):  # инициализируем
+#         self.value = value  # значением
+#         self.next = next_  # и ссылкой на следующий элемент
+#
+#     def __str__(self):
+#         return "Node value = " + str(self.value)
+#
+#
+# class LinkedList:  # класс списка
+#     def __init__(self):  # инициализируем пустым
+#         self.first = None
+#         self.last = None
+#
+#     def clear(self):  # очищаем список
+#         self.__init__()
+#
+#     def __str__(self):  # функция печати
+#         R = ''
+#
+#         pointer = self.first  # берём первый указатель
+#         while pointer is not None:  # пока указатель не станет None
+#             R += str(pointer.value)  # добавляем значение в строку
+#             pointer = pointer.next  # идём дальше по указателю
+#             if pointer is not None:  # если он существует, добавляем пробел
+#                 R += ' '
+#         return R
+#
+#     def pushleft(self, value):
+#         if self.first is None:
+#             self.first = Node(value)
+#             self.last = self.first
+#         else:
+#             new_node = Node(value, self.first)
+#             self.first = new_node
+#
+#     def pushright(self, value):
+#         if self.first is None:
+#             self.first = Node(value)
+#             self.last = self.first
+#         else:
+#             new_node = Node(value)
+#             self.last.next = new_node
+#             self.last = new_node
+#
+#     def popleft(self):
+#         if self.first is None:  # если список пустой, возвращаем None
+#             return None
+#         elif self.first == self.last:  # если список содержит только один элемент
+#             node = self.first  # сохраняем его
+#             self.__init__()  # очищаем
+#             return node  # и возвращаем сохранённый элемент
+#         else:
+#             node = self.first  # сохраняем первый элемент
+#             self.first = self.first.next  # меняем указатель на первый элемент
+#             return node  # возвращаем сохранённый
+#
+#     def popright(self):
+#         if self.first is None:  # если список пустой, возвращаем None
+#             return None
+#         elif self.first == self.last:  # если список содержит только один элемент
+#             node = self.first  # сохраняем его
+#             self.__init__()  # очищаем
+#             return node  # и возвращаем сохраненный элемент
+#         else:
+#             node = self.last  # сохраняем последний
+#             pointer = self.first  # создаём указатель
+#             while pointer.next is not node:  # пока не найдём предпоследний
+#                 pointer = pointer.next
+#             pointer.next = None  # обнуляем указатели, чтобы
+#             self.last = pointer  # предпоследний стал последним
+#             return node  # возвращаем сохранённый
+#
+#     def __iter__(self):  # объявляем класс как итератор
+#         self.current = self.first  # в текущий элемент помещаем первый
+#         return self  # возвращаем итератор
+#
+#     def __next__(self):  # метод перехода
+#         if self.current is None:  # если текущий стал последним
+#             raise StopIteration  # вызываем исключение
+#         else:
+#             node = self.current  # сохраняем текущий элемент
+#             self.current = self.current.next  # совершаем переход
+#             return node  # и возвращаем сохранённый
+#
+#     def __len__(self):
+#         count = 0
+#         pointer = self.first
+#         while pointer is not None:
+#             count += 1
+#             pointer = pointer.next
+#         return count
+#
+# LL = LinkedList()
+#
+# LL.pushright(1)
+# LL.pushleft(2)
+# LL.pushright(3)
+# LL.popright()
+# LL.pushleft(4)
+# LL.pushright(5)
+# LL.popleft()
+#
+# print(len(LL))
 
-D = {k : 100 for k in G.keys()}
-D["Адмиралтейская"] = 0
-U = {k : False for k in G.keys()}
+#
+# array = [2, 3, 1, 4, 6, 5, 9, 8, 7]
+# for i in range(len(array)): # проходим по всему массиву
+#
+#         idx_min = i # сохраняем индекс предположительно минимального элемента
+#         for j in range(i+1, len(array)):
+#                 if array[j] < array[idx_min]:
+#                         idx_min = j
+#         if i != idx_min: # если индекс не совпадает с минимальным, меняем
+#                 array[i], array[idx_min] = array[idx_min], array[i]
 
-D = {k : 100 for k in G.keys()}  # расстояния
-start_k = 'Адмиралтейская'  # стартовая вершина
-D[start_k] = 0  # расстояние от неё до самой себя равно нулю
-U = {k : False for k in G.keys()}  # флаги просмотра вершин
+# count = 0
+#
+# array = [2, 3, 1, 4, 6, 5, 9, 8, 7]
+# for i in range(1, len(array)):
+#         x = array[i]
+#         idx = i
+#         while idx > 0:
+#                 count += 1
+#                 if (array[idx - 1] <= x):
+#                         break
+#                 array[idx] = array[idx - 1]
+#                 idx -= 1
+#         array[idx] = x
+#
+# print(count)
 
-for _ in range(len(D)):
-    # выбираем среди непросмотренных наименьшее по расстоянию
-    min_k = min([k for k in U.keys() if not U[k]], key = lambda x: D[x])
+# is_sort = False
+# count = 0
+#
+# while not is_sort:
+#         is_sort = True
+#         for i in range(len(array)):
+#                 idx_min = i
+#                 for j in range(i+1, len(array)):
+#                         count += 1
+#                         if array[j] < array[idx_min]:
+#                                 idx_min = j
+#                 if i != idx_min:
+#                         array[i], array[idx_min] = array[idx_min], array[i]
+#
+#
+#                         is_sort = False
+#                         break
+# print(array)
+# print(count)
 
-    for v in G[min_k].keys():  # проходимся по всем смежным вершинам
-        D[v] = min(D[v], D[min_k] + G[min_k][v])  # минимум
-    U[min_k] = True  # просмотренную вершину помечаем
+# def info(name,age):
+#         return f'Hello my name is {name} and my age is {age}'
+# print(info("Kirill",25))
 
-D = {k : 100 for k in G.keys()}  # расстояния
-start_k = 'Адмиралтейская'  # стартовая вершина
-D[start_k] = 0  # расстояние от неё до самой себя равно нулю
-U = {k : False for k in G.keys()}  # флаги просмотра вершин
-P = {k : None for k in G.keys()}  # предки
+# import math
+# pi = round(math.pi,2)
+# def get_area_circle(radius):
+#         return pi*(radius**2)
+# print(get_area_circle(2))
+# print(round(math.pi,2))
 
-for _ in range(len(D)):
-    # выбираем среди непросмотренных наименьшее по расстоянию
-    min_k = min([k for k in U.keys() if not U[k]], key = lambda x: D[x])
+# def max(a,b):
+#         if a > b:
 
-    for v in G[min_k].keys():  # проходимся по всем смежным вершинам
-         if D[v] > D[min_k] + G[min_k][v]:  # если расстояние от текущей вершины меньше
-            D[v] = D[min_k] + G[min_k][v]  # то фиксируем его
-            P[v] = min_k  # и записываем как предок
-    U[min_k] = True  # просмотренную вершину помечаем
+# def sum_list(data):
+#         lst = []
+#         for i in data:
+#                 if i % 2 == 0:
+#                         lst.append(i)
+#         return lst
+#
+# print(sum_list([1,2,3,4,5])
+# def print_message():
+#
+#         def say_hello():
+#                 print("hello")
+#         def say_goodbye():
+#                 print('bye')
+#         say_hello()
+#         say_goodbye()
+# print_message()
 
-pointer = "Владимирская" # куда должны прийти
-path = [] # список с вершинами пути
-while pointer is not None: # перемещаемся, пока не придём в стартовую точку
-   path.append(pointer)
-   pointer = P[pointer]
 
-path.reverse() # разворачиваем путь
-for v in path:
-    print(v)
+# some_number = 123789
+# some_number = str(some_number)
+# print(some_number[1::3])
+
+
+tup = ('2025','12','31')
+tup1 = f'year:{tup [0]}\nmonth:{tup [1]}\nday:{tup [2]}'
+print(tup1)
+
+
+# some_lst = []
+# for i in range(0,11):
+#     some_lst.append(i)
+# print(some_lst)
+
+# def check_cap_lett(string):
+#     count = 0
+#     for i in string:
+#         if i.isupper():
+#             count+=1
+#             if count > 2:
+#                 return False
+#     return True
+# print (check_cap_lett("dgdgG"))
+
+
+# some_lst = []
+# for i in range(0,101):
+#     some_lst.append(i)
+# print(some_lst[0::2])
+
+
+# def check_string(string):
+#     count = 0
+#     for char in string:
+#         if char.isalpha():
+#             count+=1
+#             if count > 3:
+#                 return False
+#     return True
+#
+# string = 'a3f5b78'
+# print(check_string(string))
+
+
+# def get_first_even_digit(number):
+#
+#     number_str = str(number)
+#     for digit in reversed(number_str):
+#         if int(digit) % 2 == 0:
+#             return  int(digit)
+#     return None
+#
+# number = 12345678995785755
+# print(get_first_even_digit(number))
+
